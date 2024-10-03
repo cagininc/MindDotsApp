@@ -1,1 +1,377 @@
-// Insert your post.html code here.
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add a Memory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #e0e0e0;
+        color: #333;
+      }
+      .delete-button {
+  width: 100px; 
+  height: 40px; 
+  line-height: 40px; 
+  text-align: center; 
+  display: inline-block; 
+}
+
+      header {
+        background-color: #4a4a4a;
+        border-bottom: 2px solid #000;
+      }
+      .pagination {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 4px; 
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #0099ff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+
+
+      .pagination button:hover {
+        background-color: #007acc;
+      }
+
+      .pagination button.active {
+        background-color: #005f99;
+      }
+      .container {
+        background-color: #f8f8f8;
+        border: 2px solid #ccc;
+        box-shadow: 4px 4px #a0a0a0;
+        padding: 20px;
+        margin-top: 50px;
+        border-radius: 6px;
+      }
+
+      h1 {
+        background-color: #666;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        margin: -20px -20px 20px;
+        border-radius: 6px 6px 0 0;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #ccc;
+        background-color: #f0f0f0;
+        margin-bottom: 10px;
+        border-radius: 4px;
+      }
+
+      .page-button {
+        padding: 5px 10px;
+        margin: 0 2px;
+        background-color: #4b5563;
+        color: white;
+        border-radius: 0.375rem;
+        transition: background-color 0.3s;
+        font-size: 12px;
+      }
+
+      .page-button:hover {
+        background-color: #6b7280;
+      }
+
+      button {
+        background-color: #666;
+        border: 2px solid #555;
+        color: #fff;
+        padding: 10px;
+        font-weight: bold;
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #555;
+      }
+
+      .post {
+        background-color: #f8f8f8;
+        border: 2px solid #ccc;
+        box-shadow: 2px 2px #b0b0b0;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 4px;
+      }
+
+      .post-text {
+        flex-grow: 1;
+        margin-right: 10px;
+        color: #333;
+      }
+
+      a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="p-5 text-right">
+      <button
+        id="logoutBtn"
+        class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300"
+        onclick="logout()"
+      >
+        Logout
+      </button>
+    </header>
+
+    <h1 class="text-3xl font-semibold mt-8 mb-6">Add a Memory</h1>
+
+    <div class="container w-3/5 mx-auto">
+      <label for="text" class="block text-lg font-semibold mb-2 text-gray-700">
+        Capture your thoughts and experiences:
+      </label>
+      <textarea id="text" name="text" rows="4" required></textarea>
+      <button
+        class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700"
+        onclick="createPost()"
+      >
+        Post Memory
+      </button>
+    </div>
+
+    <div class="container w-3/5 mx-auto mt-6" id="postList"></div>
+
+    <div class="pagination mt-6" id="pagination"></div>
+
+    <script>
+      // Pagination setup
+      function setupPagination(totalPosts, currentPage, postsPerPage) {
+        const totalPages = Math.ceil(totalPosts / postsPerPage);
+        const paginationContainer = document.getElementById("pagination");
+        paginationContainer.innerHTML = "";
+
+        for (let i = 1; i <= totalPages; i++) {
+          const pageButton = document.createElement("button");
+          pageButton.textContent = i;
+          pageButton.classList.add("page-button");
+          pageButton.onclick = () => fetchPosts(i, postsPerPage);
+          if (i === currentPage) {
+            pageButton.classList.add("bg-gray-700");
+          }
+          paginationContainer.appendChild(pageButton);
+        }
+      }
+
+      // Token control
+      function checkToken() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found");
+          window.location.href = "/login";
+          return null;
+        }
+
+        try {
+          const decodedToken = jwt_decode(token);
+          const currentTime = Date.now() / 1000;
+          if (decodedToken.exp < currentTime) {
+            console.error("Token expired, redirecting to login");
+            localStorage.removeItem("token");
+            window.location.href = "/login";
+            return null;
+          }
+          return { token, userId: decodedToken.userId };
+        } catch (error) {
+          console.error("Invalid token", error);
+          window.location.href = "/login";
+          return null;
+        }
+      }
+
+      // Display posts
+      function displayPosts(data) {
+        const postContainer = document.getElementById("postList");
+        postContainer.innerHTML = "";
+
+        const posts = Array.isArray(data) ? data : [data];
+
+        if (posts.length === 0) {
+          postContainer.innerHTML = "<p>No posts available.</p>";
+          return;
+        }
+
+        posts.reverse().forEach((post) => {
+          const postElement = document.createElement("div");
+          postElement.id = post._id;
+          postElement.classList.add("post");
+
+          const postText = document.createElement("div");
+          postText.classList.add("post-text");
+          postText.textContent = post.text;
+
+          const editButton = document.createElement("span");
+          editButton.textContent = "Edit";
+          editButton.classList.add("bg-gray-500", "text-white", "px-4", "py-1", "rounded-lg", "mr-2", "cursor-pointer","w-32",
+              "h-10", "hover:bg-gray-600");
+          editButton.onclick = () => editPost(post._id);
+
+          const deleteButton = document.createElement("span");
+          deleteButton.textContent = "Delete";
+          deleteButton.classList.add(  "bg-red-500",
+              "text-white",
+              "px-4",
+              "py-1",
+              "rounded-lg",
+              "cursor-pointer",
+              "hover:bg-red-600",
+              "w-32",
+              "h-10");
+          deleteButton.onclick = () => deletePost(post._id);
+
+          postElement.appendChild(postText);
+          postElement.appendChild(editButton);
+          postElement.appendChild(deleteButton);
+          postContainer.appendChild(postElement);
+        });
+      }
+
+      // Fetch posts from the server
+      async function fetchPosts(page = 1, postsPerPage = 4) {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        try {
+          const response = await fetch(`/posts?page=${page}&limit=${postsPerPage}`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            displayPosts(data.posts);
+            setupPagination(data.totalPosts, page, postsPerPage);
+          } else {
+            console.error("Error fetching posts");
+          }
+        } catch (error) {
+          console.error("Error fetching posts:", error);
+        }
+      }
+
+      // Create a new post
+      async function createPost() {
+        const text = document.getElementById("text").value;
+        const authData = checkToken();
+        if (!authData) return;
+
+        const { token, userId } = authData;
+
+        if (text) {
+          const response = await fetch("/posts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ userId, text }),
+          });
+
+          if (response.ok) {
+            fetchPosts();
+            document.getElementById("text").value = "";
+          } else {
+            console.error("Error creating post");
+          }
+        }
+      }
+
+      // Delete a post
+      function deletePost(postId) {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        fetch(`/posts/${postId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              document.getElementById(postId).remove();
+            } else {
+              console.error(`Failed to delete post ${postId}`);
+            }
+          })
+          .catch((error) => console.error("Error deleting post:", error));
+      }
+
+      // Edit a post
+      function editPost(postId) {
+        const postTextElement = document.getElementById(postId).querySelector(".post-text");
+        console.log("post text element",postTextElement)
+        const originalText = postTextElement.textContent;
+        console.log("original text:",originalText)
+
+        const newText = prompt("Edit your memory:", originalText);
+        if (newText !== null && newText !== originalText) {
+          const token = localStorage.getItem("token");
+          if (!token) return;
+
+          fetch(`/posts/${postId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ text: newText }),
+          })
+            .then((response) => {
+              if (response.ok) {
+                postTextElement.textContent = newText;
+              } else {
+                console.error(`Failed to update post ${postId}`);
+                console.log("post id e bakalım front:",postId);
+              }
+            })
+            .catch((error) => console.error("Error updating post:", error));
+        }
+      }
+
+      // Log out function
+      function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      }
+
+      // Initial fetch
+      document.addEventListener("DOMContentLoaded", () => {
+        checkToken();
+        fetchPosts();
+      });
+    </script>
+  </body>
+</html>

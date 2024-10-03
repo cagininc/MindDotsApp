@@ -1,1 +1,176 @@
-// Insert your index.html code here.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindDots: Connect Your Thoughts, One Note at a Time</title>
+  <!-- Tailwind CSS CDN -->
+   <script src="https://cdn.tailwindcss.com"></script> 
+  <style>
+    /* Base Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f7f7f7; /* Light gray background */
+      color: #333; /* Dark gray text */
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #343a40; /* Dark gray */
+      color: #fff;
+      padding: 15px 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header button {
+      border: none;
+      background-color: #495057; /* Medium gray */
+      color: white;
+      padding: 10px 20px;
+      margin-left: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    header button:hover {
+      background-color: #6c757d; /* Lighter gray */
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff; /* White background */
+      border-radius: 10px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .welcome-message {
+      background-color: #e9ecef; /* Light gray */
+      padding: 15px;
+      border-left: 5px solid #adb5bd; /* Gray */
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    .hero-section {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .app-names {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .app-names div {
+      background-color: #ced4da; /* Light gray */
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s;
+      flex: 1;
+      margin: 0 5px;
+    }
+
+    .app-names div:hover {
+      transform: scale(1.05);
+    }
+
+    .create-post-button {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #6c757d; /* Medium gray */
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .create-post-button:hover {
+      background-color: #495057; /* Darker gray */
+    }
+  </style>
+</head>
+
+<body class="text-center">
+  <header class="flex justify-between items-center">
+    <h1 class="text-xl font-bold">MindDots</h1>
+    <div>
+      <button id="registerBtn" class="hidden" onclick="window.location.href='/register'">Register</button>
+      <button id="loginBtn" class="hidden" onclick="window.location.href='/login'">Login</button>
+      <button id="logoutBtn" class="hidden" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="welcome-message" id="welcomeMessage">
+      Welcome to MindDots! Ready to turn your scattered thoughts into a masterpiece? Let’s get started, one dot at a time!
+    </div>
+    <button id="createPostBtn" class="create-post-button hidden" onclick="redirectToPostCreation()">Add a Memory</button>
+
+    <div class="hero-section">
+        <img src="./images/andrew-neel-cckf4TsHAuw-unsplash.jpg" style="width: 1250px; height: 450px; object-fit: cover; object-position: center;" alt="Cropped Image">
+
+    </div>
+
+    <div class="app-names">
+      <div>FaceBook</div>
+      <div>Instagram</div>
+      <div>Twitter</div>
+    </div>
+
+    <a id="createPostBtn" class="create-post-button hidden" onclick="redirectToPostCreation()">Add a Memory</a>
+  </div>
+
+  <script>
+    function getUsernameFromURL() {
+      return new URLSearchParams(window.location.search).get('username');
+    }
+
+    function handleAuthentication() {
+      const username = getUsernameFromURL();
+      const registerBtn = document.getElementById('registerBtn');
+      const loginBtn = document.getElementById('loginBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const createPostBtn = document.getElementById('createPostBtn');
+      const welcomeMessage = document.getElementById('welcomeMessage');
+
+      if (username) {
+        registerBtn.style.display = loginBtn.style.display = 'none';
+        logoutBtn.style.display = createPostBtn.style.display = 'inline-block';
+        welcomeMessage.innerText = `Welcome, ${username}!`;
+      } else {
+        registerBtn.style.display = loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = createPostBtn.style.display = 'none';
+      }
+    }
+
+    function logout() {
+      window.location.href = '/logout';
+    }
+
+    function redirectToPostCreation() {
+      window.location.href = '/post';
+    }
+
+    window.onload = function () {
+      handleAuthentication();
+    };
+  </script>
+</body>
+
+</html>
