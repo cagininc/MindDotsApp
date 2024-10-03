@@ -25,12 +25,13 @@ const transporter = nodemailer.createTransport({
     },
   });
 
-
+  
 
 mongoose.set("strictQuery", false);
  
 const uri = process.env.MONGO_URI;
-mongoose.connect(uri, { dbName: "SocialDB" });
+mongoose.connect(uri, { dbName: "SocialDB" ,useNewUrlParser: true,
+  useUnifiedTopology: true});
 
 const User = mongoose.model("User", {
   username: String,
