@@ -7,7 +7,7 @@
 **MindDotsApp** is a creative journaling web application that allows users to securely manage their accounts and capture their thoughts in a seamless and engaging way. Built on **Node.js** and powered by **MongoDB**, this application utilizes  security features such as JWT for authentication and bcrypt for password hashing, ensuring that users' data is safe and protected. While MindDotsApp currently focuses on backend functionality, with a basic HTML frontend,for this project, I focused on using only HTML for the frontend, which helped me see things from a different perspective. While it's simple right now, I plan to improve the frontend experience in the future.
 
 ## Screenshots
-![Mindots](/ui-demo-mind-png)
+![Mindots](/ui-demo-mind.png)  
 
 
 ## Key Features
