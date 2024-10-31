@@ -30,13 +30,12 @@
             if (response.ok) {
               const result = await response.json();
               const token = result.token;
-              const username = result.userName;
               localStorage.setItem("token", token); // take token to local storage
 
               // success
-              window.location.href = `/index?username=${result.username}`; //  redirect user to mainpage
+              window.location.href = `/index?username=${result.username}`; // redirect user to mainpage
             } else {
-              //For failed attempt
+              // For failed attempt
               errorMessage.textContent =
                 "Login failed. Please check your username and password.";
               errorMessage.style.display = "block";
@@ -45,112 +44,41 @@
           });
       });
     </script>
-
-    <style>
- 
-      body {
-        font-family: "Inter", sans-serif;
-        background-color: #f2f2f2; 
-        color: #333; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-      }
-
-      .container {
-        background-color: #ffffff; 
-        border-radius: 12px; 
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        padding: 30px 40px;
-        max-width: 400px;
-        width: 100%;
-        border: 1px solid #e0e0e0;
-      }
-
-      h1 {
-        font-size: 28px;
-        font-weight: 600;
-        text-align: center;
-        margin-bottom: 20px;
-        color: #4a4a4a; 
-      }
-
-      label {
-        font-weight: 500;
-        color: #666; 
-      }
-
-      input[type="text"],
-      input[type="password"] {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ccc; 
-        border-radius: 8px;
-        margin-top: 8px;
-        margin-bottom: 16px;
-        font-family: "Inter", sans-serif;
-        font-size: 16px;
-        color: #333; 
-        background-color: #f9f9f9; 
-        transition: border-color 0.3s;
-      }
-
-      input[type="text"]:focus,
-      input[type="password"]:focus {
-        border-color: #888; 
-        outline: none;
-      }
-
-      button {
-        background-color: #888; 
-        color: white;
-        padding: 12px;
-        border-radius: 8px;
-        font-size: 16px;
-        width: 100%;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        border: none;
-      }
-
-      button:hover {
-        background-color: #666; 
-      }
-
-      p {
-        text-align: center;
-        margin-top: 20px;
-        color: #666; 
-      }
-
-      a {
-        color: #333; 
-        text-decoration: underline;
-        transition: color 0.3s;
-      }
-
-      a:hover {
-        color: #888; 
-      }
-    </style>
   </head>
-  <body>
-    <div class="container">
-      <h1>Login to MindDots</h1>
-      <div id="error-message" style="color:red;display:none;text-align: center;margin-top:10px"></div>
-      <form id="loginform" action="/login" method="post" class="auth-form">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required />
+  <body class="flex items-center justify-center min-h-screen bg-gray-100 text-gray-800">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full border border-gray-300">
+      <h1 class="text-2xl font-semibold text-center mb-6 text-gray-700">Login to MindDots</h1>
+      <div id="error-message" class="text-red-500 text-center mb-4 hidden"></div>
+      <form id="loginform" action="/login" method="post">
+        <label for="username" class="block font-medium text-gray-600 mb-1">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-500 bg-gray-50 text-gray-700"
+        />
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
+        <label for="password" class="block font-medium text-gray-600 mb-1">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg mb-6 focus:outline-none focus:border-gray-500 bg-gray-50 text-gray-700"
+        />
 
-        <button type="submit">Login</button>
+        <button
+          type="submit"
+          class="w-full bg-gray-600 hover:bg-gray-500 text-white py-3 rounded-lg font-semibold transition-colors"
+        >
+          Login
+        </button>
       </form>
-      <p>Don't have an account? <a href="/register">Register here</a>.</p>
+      <p class="text-center mt-6 text-gray-600">
+        Don't have an account?
+        <a href="/register" class="text-gray-700 underline hover:text-gray-500">Register here</a>.
+      </p>
     </div>
   </body>
 </html>
