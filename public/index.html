@@ -9,37 +9,37 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 text-gray-800 font-sans">
+<body class="bg-gradient-to-br from-gray-100 to-gray-300 text-gray-800 font-sans min-h-screen flex flex-col">
   <!-- Header -->
-  <header class="bg-gray-800 text-white py-4 shadow-md flex justify-between items-center px-6">
-    <h1 class="text-2xl font-bold">MindDots</h1>
-    <div>
-      <button id="registerBtn" class="hidden bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded-md" onclick="window.location.href='/register'">Register</button>
-      <button id="loginBtn" class="hidden bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded-md" onclick="window.location.href='/login'">Login</button>
-      <button id="logoutBtn" class="hidden bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded-md" onclick="logout()">Logout</button>
+  <header class="bg-gray-900 text-white py-5 shadow-lg flex justify-between items-center px-8">
+    <h1 class="text-3xl font-bold tracking-wider">MindDots</h1>
+    <div class="space-x-4">
+      <button id="registerBtn" class="hidden bg-blue-600 hover:bg-blue-500 text-white py-2 px-6 rounded-full transition duration-300" onclick="window.location.href='/register'">Register</button>
+      <button id="loginBtn" class="hidden bg-blue-600 hover:bg-blue-500 text-white py-2 px-6 rounded-full transition duration-300" onclick="window.location.href='/login'">Login</button>
+      <button id="logoutBtn" class="hidden bg-red-600 hover:bg-red-500 text-white py-2 px-6 rounded-full transition duration-300" onclick="logout()">Logout</button>
     </div>
   </header>
 
   <!-- Main Container -->
-  <div class="container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg max-w-2xl">
+  <div class="container mx-auto my-10 p-8 bg-white rounded-3xl shadow-2xl max-w-2xl">
     <!-- Welcome Message -->
-    <div id="welcomeMessage" class="bg-gray-100 border-l-4 border-gray-400 p-4 mb-6 text-lg rounded-lg">
+    <div id="welcomeMessage" class="bg-gradient-to-r from-blue-100 to-blue-200 border-l-4 border-blue-500 p-5 mb-8 text-lg font-medium text-blue-700 rounded-lg">
       Welcome to MindDots! Ready to turn your scattered thoughts into a masterpiece? Let’s get started, one dot at a time!
     </div>
 
     <!-- Add Memory Button -->
-    <button id="createPostBtn" class="hidden bg-gray-700 hover:bg-gray-600 text-white py-2 px-6 rounded-md transition" onclick="redirectToPostCreation()">Add a Memory</button>
+    <button id="createPostBtn" class="hidden w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-6 rounded-full transition duration-300 mb-8" onclick="redirectToPostCreation()">+ Add a Memory</button>
 
     <!-- Hero Section -->
-    <div class="hero-section my-8">
-      <img src="./images/andrew-neel-cckf4TsHAuw-unsplash.jpg" class="w-full h-96 object-cover rounded-lg shadow-md" alt="Cropped Image">
+    <div class="hero-section my-10">
+      <img src="./images/andrew-neel-cckf4TsHAuw-unsplash.jpg" class="w-full h-96 object-cover rounded-2xl shadow-lg transform transition hover:scale-105" alt="Cropped Image">
     </div>
 
     <!-- Social Links -->
     <div class="app-names flex justify-between mt-6 space-x-4">
-      <div class="flex-1 bg-gray-200 p-4 rounded-lg text-center transform transition hover:scale-105">FaceBook</div>
-      <div class="flex-1 bg-gray-200 p-4 rounded-lg text-center transform transition hover:scale-105">Instagram</div>
-      <div class="flex-1 bg-gray-200 p-4 rounded-lg text-center transform transition hover:scale-105">Twitter</div>
+      <div class="flex-1 bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-lg text-center transform transition duration-300 hover:scale-105 shadow-lg cursor-pointer">Facebook</div>
+      <div class="flex-1 bg-pink-500 hover:bg-pink-600 text-white p-4 rounded-lg text-center transform transition duration-300 hover:scale-105 shadow-lg cursor-pointer">Instagram</div>
+      <div class="flex-1 bg-blue-400 hover:bg-blue-500 text-white p-4 rounded-lg text-center transform transition duration-300 hover:scale-105 shadow-lg cursor-pointer">Twitter</div>
     </div>
   </div>
 
