@@ -6,134 +6,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MindDots: Connect Your Thoughts, One Note at a Time</title>
   <!-- Tailwind CSS CDN -->
-   <script src="https://cdn.tailwindcss.com"></script> 
-  <style>
-    /* Base Styles */
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f7f7f7; /* Light gray background */
-      color: #333; /* Dark gray text */
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
-
-    header {
-      background-color: #343a40; /* Dark gray */
-      color: #fff;
-      padding: 15px 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    header button {
-      border: none;
-      background-color: #495057; /* Medium gray */
-      color: white;
-      padding: 10px 20px;
-      margin-left: 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-
-    header button:hover {
-      background-color: #6c757d; /* Lighter gray */
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 20px;
-      background-color: #ffffff; /* White background */
-      border-radius: 10px;
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .welcome-message {
-      background-color: #e9ecef; /* Light gray */
-      padding: 15px;
-      border-left: 5px solid #adb5bd; /* Gray */
-      border-radius: 5px;
-      margin-bottom: 20px;
-      font-size: 1.2rem;
-    }
-
-    .hero-section {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .hero-image {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .app-names {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    .app-names div {
-      background-color: #ced4da; /* Light gray */
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
-      transition: transform 0.3s;
-      flex: 1;
-      margin: 0 5px;
-    }
-
-    .app-names div:hover {
-      transform: scale(1.05);
-    }
-
-    .create-post-button {
-      display: inline-block;
-      margin-top: 20px;
-      background-color: #6c757d; /* Medium gray */
-      color: white;
-      padding: 10px 15px;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background-color 0.3s;
-    }
-
-    .create-post-button:hover {
-      background-color: #495057; /* Darker gray */
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="text-center">
-  <header class="flex justify-between items-center">
-    <h1 class="text-xl font-bold">MindDots</h1>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <!-- Header -->
+  <header class="bg-gray-800 text-white py-4 shadow-md flex justify-between items-center px-6">
+    <h1 class="text-2xl font-bold">MindDots</h1>
     <div>
-      <button id="registerBtn" class="hidden" onclick="window.location.href='/register'">Register</button>
-      <button id="loginBtn" class="hidden" onclick="window.location.href='/login'">Login</button>
-      <button id="logoutBtn" class="hidden" onclick="logout()">Logout</button>
+      <button id="registerBtn" class="hidden bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded-md" onclick="window.location.href='/register'">Register</button>
+      <button id="loginBtn" class="hidden bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded-md" onclick="window.location.href='/login'">Login</button>
+      <button id="logoutBtn" class="hidden bg-gray-600 hover:bg-gray-500 text-white py-2 px-4 rounded-md" onclick="logout()">Logout</button>
     </div>
   </header>
 
-  <div class="container">
-    <div class="welcome-message" id="welcomeMessage">
+  <!-- Main Container -->
+  <div class="container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg max-w-2xl">
+    <!-- Welcome Message -->
+    <div id="welcomeMessage" class="bg-gray-100 border-l-4 border-gray-400 p-4 mb-6 text-lg rounded-lg">
       Welcome to MindDots! Ready to turn your scattered thoughts into a masterpiece? Let’s get started, one dot at a time!
     </div>
-    <button id="createPostBtn" class="create-post-button hidden" onclick="redirectToPostCreation()">Add a Memory</button>
 
-    <div class="hero-section">
-        <img src="./images/andrew-neel-cckf4TsHAuw-unsplash.jpg" style="width: 1250px; height: 450px; object-fit: cover; object-position: center;" alt="Cropped Image">
+    <!-- Add Memory Button -->
+    <button id="createPostBtn" class="hidden bg-gray-700 hover:bg-gray-600 text-white py-2 px-6 rounded-md transition" onclick="redirectToPostCreation()">Add a Memory</button>
 
+    <!-- Hero Section -->
+    <div class="hero-section my-8">
+      <img src="./images/andrew-neel-cckf4TsHAuw-unsplash.jpg" class="w-full h-96 object-cover rounded-lg shadow-md" alt="Cropped Image">
     </div>
 
-    <div class="app-names">
-      <div>FaceBook</div>
-      <div>Instagram</div>
-      <div>Twitter</div>
+    <!-- Social Links -->
+    <div class="app-names flex justify-between mt-6 space-x-4">
+      <div class="flex-1 bg-gray-200 p-4 rounded-lg text-center transform transition hover:scale-105">FaceBook</div>
+      <div class="flex-1 bg-gray-200 p-4 rounded-lg text-center transform transition hover:scale-105">Instagram</div>
+      <div class="flex-1 bg-gray-200 p-4 rounded-lg text-center transform transition hover:scale-105">Twitter</div>
     </div>
-
-    <a id="createPostBtn" class="create-post-button hidden" onclick="redirectToPostCreation()">Add a Memory</a>
   </div>
 
   <script>
