@@ -5,6 +5,7 @@
 ## Overview
 
 **MindDotsApp** is a creative journaling web application that allows users to securely manage their accounts and capture their thoughts in a seamless and engaging way. Built on **Node.js** and powered by **MongoDB**, this application utilizes  security features such as JWT for authentication and bcrypt for password hashing, ensuring that users' data is safe and protected. While MindDotsApp currently focuses on backend functionality, with a basic HTML frontend,for this project, I focused on using only HTML for the frontend, which helped me see things from a different perspective. While it's simple right now, I plan to improve the frontend experience in the future.
+[https://minddotsapp.vercel.app/](https://minddotsapp.vercel.app/)
 
 ## Screenshots
 ![Mindots](/ui-demo-mind.png)  
@@ -66,4 +67,4 @@ MindDotsApp was deployed using Vercel, a cloud platform that enables fast and re
 *   **Continuous Deployment:** Every time a new feature or update was pushed to the main branch, Vercel automatically detected the changes and deployed the updated version of the application.
 *   **Serverless API Handling:** The backend of MindDotsApp is built using Node.js and Express. When deployed on Vercel, these backend APIs were automatically converted into serverless functions. Vercel’s serverless environment scales dynamically based on the number of incoming requests, ensuring efficient resource usage.
 *   **Environment Variables:** Using Vercel’s environment settings, sensitive data such as the MongoDB connection string and email API keys were securely added. These environment variables were automatically injected during the build process, ensuring that the app works securely and effectively in the cloud environment.
-*   **Domain & URL:** Once the deployment was completed, Vercel provided a custom URL for accessing the app. The live version of MindDotsApp can be accessed via the following link: [https://minddotsapp.vercel.app/](https://minddotsapp.vercel.app/)
+*   **Domain & URL:** Once the deployment was completed, Vercel provided a custom URL for accessing the app. The live version of MindDotsApp can be accessed via the following link: 
